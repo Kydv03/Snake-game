@@ -3,109 +3,251 @@
   padding: 0;
   box-sizing: border-box;
 }
+
 html,
 body {
   height: 100%;
   width: 100%;
 }
+
 :root {
-  --bg-primary-color: #0c0c0c;
-  --bg-fill-color: #fdfdfc;
-  --bg-food-color: #ff3b3b;
-  --text-primary-color: #f0f0f0;
-  --space-xs: 4px;
-  --space-sm: 8px;
-  --space-md: 16px;
-  --space-lg: 24px;
-  --space-xl: 32px;
-  --space-2xl: 40px;
-  --space-3xl: 48px;
-  --border-primary-color: #333333;
-  --border-radius-xs: 4px;
-  --border-radius-sm: 8px;
-  --border-radius-md: 12px;
-  --border-radius-lg: 16px;
-  --border-radius-xl: 20px;
-  --border-radius-2xl: 24px;
+  --bg-primary: #0a0a0a;
+  --bg-surface: #111111;
+  --bg-card: #161616;
+  --border-color: #222222;
+  --border-hover: #333333;
+  --text-primary: #f5f5f0;
+  --text-muted: #666666;
+  --snake-color: #e8e8e0;
+  --snake-head: #ffffff;
+  --food-color: #ff4040;
+  --food-glow: rgba(255, 64, 64, 0.4);
+  --accent: #ff4040;
+  --font-display: "Syne", sans-serif;
+  --font-mono: "Space Mono", monospace;
 }
+
 html {
-  background-color: var(--bg-primary-color);
-  color: var(--text-primary-color);
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-display);
 }
-main,
+
+main {
+  height: 100vh;
+  width: 100%;
+  position: relative;
+}
+
 section {
   height: 100%;
   width: 100%;
-}
-
-.btn {
-  padding: var(--space-sm) var(--space-md);
-  border: none;
-  border-radius: var(--border-radius-sm);
-  transition: all 0.3s ease;
-}
-.btn:hover {
-  transform: scale(1.1);
-}
-section {
-  padding: var(--space-2xl);
+  padding: 28px 36px;
   display: flex;
   flex-direction: column;
-  height: 100%;
-  gap: var(--space-lg);
-}
-section .infos {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-}
-.info {
-  padding: var(--space-sm) var(--space-md);
-  border: 1px solid var(--border-primary-color);
-  border-radius: var(--space-sm);
+  gap: 20px;
 }
 
+/* HUD */
+.infos {
+  display: flex;
+  gap: 12px;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 10px 20px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  min-width: 110px;
+}
+
+.info-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+}
+
+.info-value {
+  font-family: var(--font-mono);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+/* Board */
 .board {
-  border: 1px solid var(--border-primary-color);
   flex-grow: 1;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
   grid-template-rows: repeat(auto-fill, minmax(50px, 1fr));
-}
-.block {
-  /* width: 30px;
-  height: 30px; */
-  border: 1px solid var(--border-primary-color);
-  border-radius: 10%;
-}
-.fill {
-  background-color: var(--bg-fill-color);
-}
-.food {
-  background-color: var(--bg-food-color);
+  overflow: hidden;
+  position: relative;
 }
 
+.block {
+  border: 1px solid #181818;
+}
+
+.fill {
+  background-color: var(--snake-color);
+  border-radius: 4px;
+  transition: background-color 0.05s;
+}
+
+.fill.head {
+  background-color: var(--snake-head);
+  border-radius: 6px;
+}
+
+.food {
+  background-color: var(--food-color);
+  border-radius: 50%;
+  box-shadow:
+    0 0 14px var(--food-glow),
+    0 0 4px var(--food-color);
+  animation: pulse 0.9s ease-in-out infinite alternate;
+}
+
+@keyframes pulse {
+  from {
+    box-shadow: 0 0 8px var(--food-glow);
+  }
+  to {
+    box-shadow:
+      0 0 20px var(--food-glow),
+      0 0 6px var(--food-color);
+  }
+}
+
+/* Controls hint */
+.controls-hint {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  text-align: center;
+  letter-spacing: 0.06em;
+}
+
+/* Modal */
 .modal {
   height: 100vh;
   width: 100vw;
   position: fixed;
   top: 0;
-  background-color: #35363587;
-  backdrop-filter: blur(4px);
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.82);
+  backdrop-filter: blur(6px);
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 10;
 }
-.modal .start-game,
-.modal .game-over {
+
+.modal-card {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-lg);
+  gap: 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  padding: 48px 56px;
+  text-align: center;
+  animation: slide-up 0.3s ease;
 }
 
-.modal .game-over {
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modal-icon {
+  font-size: 36px;
+  color: var(--accent);
+  line-height: 1;
+}
+
+.modal-icon.dead {
+  color: var(--text-muted);
+}
+
+.modal-card h2 {
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+}
+
+.modal-card p {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.result-text {
+  font-size: 15px !important;
+  color: var(--text-primary) !important;
+}
+
+.game-over {
   display: none;
+}
+
+/* Button */
+.btn {
+  margin-top: 8px;
+  padding: 12px 32px;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition:
+    transform 0.15s ease,
+    opacity 0.15s ease;
+}
+
+.btn:hover {
+  opacity: 0.88;
+  transform: scale(1.04);
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+/* Flash animation on death */
+@keyframes flash-red {
+  0%,
+  100% {
+    background: var(--bg-primary);
+  }
+  50% {
+    background: rgba(255, 64, 64, 0.08);
+  }
+}
+
+.board.flash {
+  animation: flash-red 0.3s ease;
 }

@@ -1,9 +1,15 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Snake-Game</title>
+    <title>Snake Game</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
@@ -11,34 +17,36 @@
       <section>
         <div class="infos">
           <div class="info">
-            <h3>
-              High Score:
-              <span id="high-score">0</span>
-            </h3>
+            <span class="info-label">High Score</span>
+            <span class="info-value" id="high-score">0</span>
           </div>
           <div class="info">
-            <h3>
-              Score:
-              <span id="score">0</span>
-            </h3>
+            <span class="info-label">Score</span>
+            <span class="info-value" id="score">0</span>
           </div>
           <div class="info">
-            <h3>
-              Time:
-              <span id="time">00-00</span>
-            </h3>
+            <span class="info-label">Time</span>
+            <span class="info-value" id="time">00:00</span>
           </div>
         </div>
+
         <div class="board"></div>
+
+        <div class="controls-hint"><span>↑ ↓ ← →</span> arrow keys to move</div>
       </section>
+
       <div class="modal">
-        <div class="start-game">
-          <h3>Snake Game</h3>
+        <div class="modal-card start-game">
+          <div class="modal-icon">◈</div>
+          <h2>Snake</h2>
+          <p>Eat food. Grow longer. Don't crash.</p>
           <button class="btn btn-start">Start Game</button>
         </div>
-        <div class="game-over">
-          <h3>Game-Over</h3>
-          <button class="btn btn-restart">Restart Game</button>
+        <div class="modal-card game-over">
+          <div class="modal-icon dead">✕</div>
+          <h2>Game Over</h2>
+          <p class="result-text">Score: <span id="final-score">0</span></p>
+          <button class="btn btn-restart">Play Again</button>
         </div>
       </div>
     </main>
